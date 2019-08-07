@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>A-Simple-Labyrinth</title>
+		<meta name="description" content="A labyrinth made of stone walls and four exits. Additional audio to make the scene more realistic. Designed with A-Frame.">
+		<script src="../js/aframe.min.js"></script>
+	</head>
+	<body>
+		<a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" light="defaultLightsEnabled: false" shadow="type: pcfsoft; autoUpdate: true" light="shadowMapType: pcfsoft" stats>
+			<a-assets>
+				<!-- Materials -->
+				<img id="stone" src="materials/sandstone_256.png">
+				<!-- Mixins -->
+				<a-mixin id="wall" geometry="primitive: box; width: 1; height: 2; depth: 0.2" material="src: #stone; color: bisque; shader: standard" shadow="cast: true; receive: true;" position="0 1 0"></a-mixin>
+				<a-mixin id="rotate" rotation="0 90 0"></a-mixin>
+				<!-- Light -->
+				<a-mixin id="light-exit" light="type: point; intensity: 0.75; distance: 10; decay: 2"></a-mixin>
+				
+				<!-- Audio -->
+				<audio id="audioloop" src="audio/crickets-and-thunder.ogg" autoplay="true" preload="auto" loop="true"></audio>
+			</a-assets>
+			
+			<!-- Wall front -->
+			<a-entity position="0.5 0 -6" class="outer-wall-front">
+				<a-entity position="-6.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="0 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="5.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			
+			<!-- Wall right -->
+			<a-entity position="6 0 -0.5" mixin="rotate" class="outer-wall-right">
+				<a-entity position="-6 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-2.95 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<!-- Exit here. -->
+				<a-entity position="-1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="0 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="1.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<!-- Exit here. -->
+				<a-entity position="3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="5 1 0" mixin="wall" class="wall"></a-entity>
+			</a-entity>
+			
+			<!-- Wall back -->
+			<a-entity position="0.5 0 6" class="outer-wall-back">
+				<a-entity position="-6 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<!-- Exit here. -->
+				<a-entity position="-4.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="0 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="5.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			
+			<!-- Wall left -->
+			<a-entity position="-6 0 -0.5" mixin="rotate"  class="outer-wall-left">
+				<a-entity position="-6 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-4 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="0 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="1 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="2 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="3 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="4.05 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<!-- Exit here. -->
+			</a-entity>
+			
+			
+			<!-- Tiles-Row Front -5 -->
+			<a-entity position="0 0 -5" class="tiles-front-minus-5">
+				<a-entity position="-5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="0 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="3.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front -5 -->
+			
+			<!-- Tiles-Row Front -4 -->
+			<a-entity position="0 0 -4" class="tiles-front-minus-4">
+				<a-entity position="-5 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-4 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="0.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="1.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="3 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front -4 -->
+			
+			<!-- Tiles-Row Front -3 -->
+			<a-entity position="0 0 -3" class="tiles-front-minus-3">
+				<a-entity position="-5.5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-4.5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-3.5 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="0 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="1.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity> 
+				<a-entity position="2.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="5.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front -3 -->
+			
+			<!-- Tiles-Row Front -2 -->
+			<a-entity position="0 0 -2" class="tiles-front-minus-2">
+				<a-entity position="-4 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-2.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-0.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="2.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="4 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front -2 -->
+			
+			<!-- Tiles-Row Front -1 -->
+			<a-entity position="0 0 -1" class="tiles-front-minus-1">
+				<a-entity position="-5 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-4.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="0 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="0.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front -1 -->
+			
+			<!-- Tiles-Row Front 0 -->
+			<a-entity position="0 0 0" class="tiles-front-zero">
+				<a-entity position="-5.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-4.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-0.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="2 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="3.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="5 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Front 0 -->
+			
+			<!-- Tiles-Row Back +1 -->
+			<a-entity position="0 0 1" class="tiles-back-plus-1">
+				<a-entity position="-4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-2.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-2 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="0 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="0.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="1 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="2.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="5.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +1 -->
+			
+			<!-- Tiles-Row Back +2 -->
+			<a-entity position="0 0 2" class="tiles-back-plus-2">
+				<a-entity position="-4.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-3.5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="-2.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-1 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="0.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="1.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="3.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="4.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="5 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +2 -->
+			
+			<!-- Tiles-Row Back +3 -->
+			<a-entity position="0 0 3" class="tiles-back-plus-3">
+				<a-entity position="-5.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-4.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity> 
+				<a-entity position="-3 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-1 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="0 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity> 
+				<a-entity position="3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="5.5 1 0" mixin="wall" class="wall"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +3 -->
+			
+			<!-- Tiles-Row Back +4 -->
+			<a-entity position="0 0 4" class="tiles-back-plus-4">
+				<a-entity position="-4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-2 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-1.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="0 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="0.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="2 1 -0.45" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +4 -->
+			
+			<!-- Tiles-Row Back +5 -->
+			<a-entity position="0 0 5" class="tiles-back-plus-5">
+				<a-entity position="-4.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity>
+				<a-entity position="-3 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="-2.5 1 0" mixin="wall" class="wall" geometry="width: 1.2"></a-entity> 
+				<a-entity position="-2 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="1.45 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+				<a-entity position="2.5 1 0" mixin="wall" class="wall"></a-entity> 
+				<a-entity position="3 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="3.5 1 0" mixin="wall" class="wall"></a-entity>
+				<a-entity position="4.55 1 0" mixin="wall" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +5 -->
+			
+			<!-- Tiles-Row Back +6 -->
+			<a-entity position="0 0 6" class="tiles-back-plus-6">
+				<a-entity position="-4 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="-1 1 -0.5" mixin="wall rotate" class="wall"></a-entity>
+				<a-entity position="0 1 -0.55" mixin="wall rotate" class="wall" geometry="width: 1.1"></a-entity>
+			</a-entity>
+			<!-- End Tiles-Row Back +6 -->
+			
+			<!-- Lights at Exit -->
+			<!--<a-entity position="7 4 -2.5" mixin="light-exit"></a-entity>
+			<a-entity position="7 4 1.5" mixin="light-exit"></a-entity>
+			<a-entity position="-4.5 4 7" mixin="light-exit"></a-entity>
+			<a-entity position="-7 4 -5.5" mixin="light-exit"></a-entity>-->
+			
+			<!-- Globals-->
+			<!-- Scene Lights-->
+			<a-entity class="scene-directional" light="type: directional; color: lightyellow; intensity: 0.7; castShadow: true; shadowCameraLeft: -12; shadowCameraRight: 12; shadowCameraTop: 10; shadowMapHeight: 2048; shadowMapWidth: 2048;" position="5 8 8"></a-entity>
+			
+			<a-entity light="type: hemisphere; intensity: 0.6; color: royalblue; groundColor: cornsilk"></a-entity>
+			
+			<a-gradient-sky material="shader: gradient; topColor: 40 0 70; bottomColor: 0 200 255; side: back"></a-gradient-sky>
+			
+			<!-- Ground -->
+			<a-box class="ground" geometry="width: 20; height: 0.3; depth: 20;" position="0 0.2 0" material="src: #stone; repeat: 20 20; roughness: 1; color: lightgreen; shader: standard" shadow="cast: true; receive: true;"></a-box>
+			
+		</a-scene>
+		<script src="../js/gradientsky.min.js"></script>
+	</body>
+</html>

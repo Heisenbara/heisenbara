@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solar System with Orbit Lines and Distance Positions from Sun</title>
+        <meta name="description" content="Solar System with Orbit Lines and Distance Positions from Sun: Web VR with A-Frame">
+        <script src="../js/aframe.min.js"></script>
+		<script src="../js/aframe-animation-component.min.js"></script>
+		<script src="../js/aframe-orbit-controls.min.js"></script>
+    </head>
+
+    <body>
+        <a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" light="defaultLightsEnabled: false" shadow="type: pcfsoft" stats>
+			
+			<!-- Mixins -->
+			
+			<!-- Show Orbit Lines -->
+            <a-mixin id="orbit" geometry="primitive: torus; radius: 3; radiusTubular: 0.01; segmentsTubular: 100" material="color: #FFFFFF; opacity: 0.2; shader: standard" rotation="90 0 0" scale="2 2 0.1"></a-mixin>
+			<!-- Planet Rotation -->
+			<a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; dur: 20000; easing: linear"></a-mixin>
+			<!-- Orbit Rotation: Planet with Moons or Rings -->
+            <a-mixin id="orbit-rotation" animation="property: rotation; loop: true; to: 0 360 0; dur: 80000; easing: linear"></a-mixin>
+			<!-- Planets, Smooth Surface for Rendering -->
+			<a-mixin id="sphere" geometry="primitive: sphere; segments-width: 30; segments-height: 30; shader: standard" material="color: grey; roughness: 0.7" radius="1"></a-mixin>
+			<a-mixin id="rough" geometry="segments-width: 10; segments-height: 10; shader: standard"></a-mixin>
+			<!-- Planet Shadows if needed -->
+			<a-mixin id="shadows" material="shader: standard" shadow="cast: true; receive: true"></a-mixin>
+			<!-- Planet Rings, Smooth Surface for Rendering -->
+			<a-mixin id="ring-segments" geometry="primitive: torus; segments-radial: 30; segments-tubular: 30; shader: standard" material="color: white"></a-mixin>
+			<a-mixin id="ring-flat" geometry="segments-radial: 10; segments-tubular: 10; shader: standard"></a-mixin>
+			<!-- Shape Opacity -->
+			<a-mixin id="shape-opacity" material="opacity: 0.2; shader: standard"></a-mixin>
+			
+			<!-- Assets -->
+            <a-assets>
+                <img id="milky-way" src="materials/2k_stars_milky_way.jpg" crossorigin="anonymous">
+				<img id="sun-texture" src="materials/2k_sun.jpg" material="color: yellow; opacity: 1" crossorigin="anonymous">
+                <img id="mercury-texture" src="materials/2k_mercury.jpg" crossorigin="anonymous">
+                <img id="venus-texture" src="materials/2k_venus_surface.jpg" crossorigin="anonymous">
+                <img id="earth-texture" src="materials/2k_earth_daymap.jpg" crossorigin="anonymous">
+				<img id="moon-texture" src="materials/2k_moon.jpg" crossorigin="anonymous">
+                <img id="mars-texture" src="materials/2k_mars.jpg" crossorigin="anonymous">
+                <img id="jupiter-texture" src="materials/2k_jupiter.jpg" crossorigin="anonymous">
+                <img id="saturn-texture" src="materials/2k_saturn.jpg" crossorigin="anonymous">
+				<img id="saturn-ring-texture" src="materials/2k_saturn_ring_alpha.png" crossorigin="anonymous">
+                <img id="uranus-texture" src="materials/2k_uranus.jpg" crossorigin="anonymous">
+                <img id="neptune-texture" src="materials/2k_neptune.jpg" crossorigin="anonymous">
+                <img id="pluto-texture" src="materials/pluto-map.jpg" crossorigin="anonymous">
+				
+                <a-asset-item id="asteroids" src="models/asteroids.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+				
+				<!-- Audio -->
+				<audio id="audioloop" src="audio/Alien_Song.mp3" autoplay="true" preload="none" loop="true"></audio>
+            </a-assets>
+			
+			<!-- Scene -->
+			<!-- The Camera -->
+			<a-entity id="rig" position="-15 3 -5">
+				<a-entity id="camera" camera look-controls orbit-controls="target: 100 1.6 20; initialPosition: -10 1 10"></a-entity>
+			</a-entity>
+			
+			<!-- Basic Lighting -->
+            <a-entity id="basic-light" light="type: ambient; color: #BBB; castShadow: true"></a-entity>
+			
+			<!-- Starry Sky -->
+			<a-sky material="src: #milky-way" geometry="radius: 5000"></a-sky>
+			
+			
+			<!-- Orbit Lines, Visibility: toggle if needed -->
+			<a-entity id="orbit-lines">
+				<a-entity mixin="orbit" geometry="radius: 3"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 4.24"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 5.24"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 6.25"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 12.1"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 15.55"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 18.05"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 20.05"></a-entity>
+				<a-entity mixin="orbit" geometry="radius: 23.05"></a-entity>
+			</a-entity>
+
+            <!-- The Sun with Point Light -->
+            <a-entity id="sun" mixin="sphere rotation" position="0 0 0" geometry="radius: 4" material="src: #sun-texture; color: white; roughness: 0; metalness: 1; emissive: #FFF; emissiveIntensity: 3; shader: flat">
+				<a-entity light="type: point; intensity: 3; distance: 300; decay: 2; castShadow: true"></a-entity>
+			</a-entity>
+			
+			<!-- Asteroid Belt -->
+            <a-entity id="asteroid-belt" mixin="shadows rotation" gltf-model="#asteroids" scale="2.1 2.1 2.1" position="0 0 0" animation="dur: 60000;"></a-entity>
+			
+			<!-- All Planets with Moons and Rings in Order from the Sun -->
+			<a-entity id="orbit-mercury" mixin="orbit-rotation" animation="dur: 8800">
+                <a-entity id="mercury" mixin="sphere shadows orbit-rotation" position="0 0 6" geometry="radius: 0.4" material="src: #mercury-texture" animation="dur: 5800"></a-entity>
+            </a-entity>
+
+            <a-entity id="orbit-venus" mixin="orbit-rotation" animation="dur: 22400">
+                <a-entity id="venus" mixin="sphere shadows orbit-rotation" position="0 0 8.5" geometry="radius: 0.4" material="src: #venus-texture" animation="dur: 2430"></a-entity>
+            </a-entity>
+			
+			<a-entity id="orbit-earth" mixin="orbit-rotation" animation="dur: 36526">
+                <a-entity id="earth-and-moon" position="0 0 10.5">
+                    <a-entity id="earth-container">
+                        <a-entity id="earth" mixin="sphere shadows orbit-rotation" position="0 0 0" geometry="radius: 0.5" material="src: #earth-texture" animation="dur: 470"></a-entity>
+                        <a-entity id="moon-container" mixin="orbit-rotation" animation="dur: 2732">
+                            <a-entity id="moon" mixin="sphere shadows" position="-1 0 0" geometry="radius: 0.10" material="src: #moon-texture"></a-entity>
+                        </a-entity>
+                    </a-entity>
+                </a-entity>
+            </a-entity>
+
+            <a-entity id="orbit-mars" mixin="orbit-rotation" animation="dur: 68700">
+                <a-entity id="mars" mixin="sphere shadows orbit-rotation" position="0 0 12.5" geometry="radius: 0.4" material="src: #mars-texture" animation="dur: 482"></a-entity>
+            </a-entity>
+			
+			<a-entity id="orbit-jupiter" mixin="orbit-rotation" animation="dur: 113150">
+                <a-entity id="jupiter" mixin="sphere shadows orbit-rotation" position="0 0 24" geometry="radius: 2.5" material="src: #jupiter-texture" animation="dur: 1950"></a-entity>
+            </a-entity>
+			
+			<a-entity id="orbit-saturn" mixin="orbit-rotation" animation="dur: 294570">
+                <a-entity id="saturn-container" position="0 0 31">
+                    <a-entity id="saturn" mixin="sphere shadows orbit-rotation" geometry="radius: 1.8" material="src: #saturn-texture" animation="dur: 10330"></a-entity>
+                    <a-entity id="saturn-ring-1" mixin="ring-segments shadows" geometry="radius: 3.2; radiusTubular: 0.1" material="color: dimgray; opacity: 0.8" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                    <a-entity id="saturn-ring-2" mixin="ring-segments shadows" geometry="radius: 2.4; radiusTubular: 0.2" material="color: darkgray; opacity: 0.8" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                </a-entity>
+            </a-entity>
+
+            <a-entity id="orbit-uranus" mixin="orbit-rotation" animation="dur: 840110">
+                <a-entity id="uranus-container" position="0 0 36">
+                    <a-entity id="uranus" mixin="sphere shadows orbit-rotation" geometry="radius: 0.75" material="src: #uranus-texture" animation="dur: 17140"></a-entity>
+                    <a-entity id="uranus-ring" mixin="ring-segments shadows" geometry="radius: 1.5; radiusTubular: 0.01" material="opacity: 0.8" rotation="-10 90 0" scale="1 1 0.1"></a-entity>
+                </a-entity>
+            </a-entity>
+			
+			<a-entity id="orbit-neptune" mixin="orbit-rotation" animation="dur: 1647900">
+                <a-entity id="neptune-container" position="0 0 40">
+                    <a-entity id="neptune" mixin="sphere shadows orbit-rotation" geometry="radius: 1" material="src: #neptune-texture" animation="dur: 15580"></a-entity>
+                    <a-entity id="neptune-ring-1" mixin="ring-segments shadows"  geometry="radius: 2; radiusTubular: 0.01" material="opacity: 0.8" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                    <a-entity id="neptune-ring-2" mixin="ring-segments shadows" geometry="radius: 1.7; radiusTubular: 0.05" material="opacity: 0.8" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                    <a-entity id="neptune-ring-3" mixin="ring-segments shadows" geometry="radius: 1.3; radiusTubular: 0.01" material="opacity: 0.8" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                </a-entity>
+            </a-entity>
+			
+			<a-entity id="orbit-pluto" mixin="orbit-rotation" animation="dur: 2473430">
+                <a-entity id="pluto" mixin="sphere shadows orbit-rotation" position="0 0 46" geometry="radius: 0.4" material="src: #pluto-texture" animation="dur: 69170"></a-entity>
+            </a-entity>
+
+
+			<!-- Planets as Shapes for better Understanding, Visibility if needed -->
+			<a-entity id="mercury-pos" mixin="sphere rough shape-opacity" position="0 0 6" geometry="radius: 0.4" material="src: #mercury-texture"></a-entity>
+			
+            <a-entity id="venus-pos" mixin="sphere rough shape-opacity" position="0 0 8.5" geometry="radius: 0.4" material="src: #venus-texture"></a-entity>
+			
+			<a-entity id="earth-and-moon-pos" position="0 0 10.5">
+                <a-entity id="earth-pos" mixin="sphere rough shape-opacity" position="0 0 0" geometry="radius: 0.5" material="src: #earth-texture"></a-entity>
+                <a-entity id="moon-pos" mixin="sphere rough shape-opacity" position="-1 0 0" geometry="radius: 0.10" material="src: #moon-texture"></a-entity>
+            </a-entity>
+			
+            <a-entity id="mars-pos" mixin="sphere rough shape-opacity" position="0 0 12.5" geometry="radius: 0.4" material="src: #mars-texture"></a-entity>
+			
+            <a-entity id="jupiter-pos" mixin="sphere rough shape-opacity" position="0 0 24" geometry="radius: 2.5" material="src: #jupiter-texture"></a-entity>
+			
+            <a-entity id="saturn-container-pos" position="0 0 31">
+                <a-entity id="saturn-pos" mixin="sphere rough shape-opacity" geometry="radius: 1.8" material="src: #saturn-texture"></a-entity>
+                <a-entity id="saturn-ring-1-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 3.2; radiusTubular: 0.1" material="color: dimgray" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                <a-entity id="saturn-ring-2-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 2.4; radiusTubular: 0.2" material="color: darkgray" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+            </a-entity>
+
+            <a-entity id="uranus-container-pos" position="0 0 36">
+                <a-entity id="uranus-pos" mixin="sphere rough shape-opacity" geometry="radius: 0.75" material="src: #uranus-texture"></a-entity>
+                <a-entity id="uranus-ring-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 1.5; radiusTubular: 0.01" rotation="-10 90 0" scale="1 1 0.1"></a-entity>
+            </a-entity>
+
+            <a-entity id="neptune-container-pos" position="0 0 40">
+                <a-entity id="neptune-pos" mixin="sphere rough shape-opacity" geometry="radius: 1" material="src: #neptune-texture"></a-entity>
+                <a-entity id="neptune-ring-1-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 2; radiusTubular: 0.01" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                <a-entity id="neptune-ring-2-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 1.7; radiusTubular: 0.05" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+                <a-entity id="neptune-ring-3-pos" mixin="ring-segments ring-flat shape-opacity" geometry="radius: 1.3; radiusTubular: 0.01" rotation="90 0 0" scale="1 1 0.1"></a-entity>
+            </a-entity>
+			<a-entity id="pluto-pos" mixin="sphere rough shape-opacity" position="0 0 46" geometry="radius: 0.4" material="src: #pluto-texture"></a-entity>
+        </a-scene>
+    </body>
+
+</html>

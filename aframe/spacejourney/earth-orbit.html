@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Earth Orbit: Facing the earth while rotating</title>
+        <meta name="description" content="Earth Orbit: Facing the earth while rotating: Web VR with A-Frame">
+        <script src="../js/aframe.min.js"></script>
+		<script src="../js/aframe-animation-component.min.js"></script>
+		<script src="../js/aframe-orbit-controls.min.js"></script>
+    </head>
+
+    <body>
+        <a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" light="defaultLightsEnabled: false" shadow="type: pcfsoft" sound="src: #audioloop" stats>
+			
+			<!-- Mixins -->
+			
+			<!-- Planet Rotation -->
+			<a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; easing: linear"></a-mixin>
+			<!-- Orbit Rotation: Planet with Moons or Rings -->
+            <a-mixin id="orbit-rotation" animation="property: rotation; loop: true; to: 0 360 0; easing: linear"></a-mixin>
+			<!-- Planets, Smooth Surface for Rendering -->
+			<a-mixin id="sphere" geometry="primitive: sphere; segments-width: 60; segments-height: 60; shader: standard" material="color: grey; roughness: 0.7" radius="1"></a-mixin>
+			<a-mixin id="rough" geometry="segments-width: 10; segments-height: 10; shader: standard"></a-mixin>
+			<!-- Planet Shadows if needed -->
+			<a-mixin id="shadows" material="shader: standard" shadow="cast: true; receive: true"></a-mixin>
+			
+			<!-- Assets -->
+            <a-assets>
+                <img id="milky-way" src="materials/2k_stars_milky_way.jpg" crossorigin="anonymous">
+				<img id="sun-texture" src="materials/2k_sun.jpg" material="color: yellow; opacity: 1" crossorigin="anonymous">
+                <img id="earth-texture" src="materials/2k_earth_daymap.jpg" crossorigin="anonymous">
+				<img id="moon-texture" src="materials/2k_moon.jpg" crossorigin="anonymous">
+				
+				<!-- Audio -->
+				<audio id="audioloop" src="audio/Sci_Fi_Vortex.mp3" autoplay="true" preload="none" loop="true"></audio>
+			</a-assets>
+			
+			<!-- Scene -->
+			
+			<!-- Basic Lighting -->
+            <a-entity id="basic-light" light="type: ambient; color: #BBB; castShadow: true"></a-entity>
+			
+			<!-- Starry Sky -->
+			<a-sky material="src: #milky-way" geometry="radius: 5000" rotation="20 20 0"></a-sky>
+
+            <!-- The Sun with Point Light -->
+            <a-entity id="sun" mixin="sphere rough rotation" position="0 0 0" geometry="radius: 0.2" material="src: #sun-texture; color: white; roughness: 0; metalness: 1; emissive: #FFF; emissiveIntensity: 3; shader: flat" animation="dur: 3000000">
+				<a-entity light="type: point; intensity: 3; distance: 300; decay: 2; castShadow: true"></a-entity>
+			</a-entity>
+			
+			<a-entity id="orbit-earth" mixin="orbit-rotation" animation="dur: 60000">
+                <a-entity id="earth-and-moon" position="0 0 10.5" mixin="orbit-rotation" animation="dur: 10000">
+                    <!-- The Camera -->
+					<a-entity id="camera-container" mixin="" position="0 0 -1.5" rotation="0 -180 0" animation="dur: 5000">
+						<a-entity camera="userHeight: 1.6" wasd-controls look-controls position="0 0 0"></a-entity>
+					</a-entity>
+					
+					<!-- Earth -->
+					<a-entity id="earth" mixin="sphere shadows rotation" position="0 0 0" geometry="radius: 0.5" material="src: #earth-texture" animation="dur: 50000"></a-entity>
+					
+					<a-entity id="moon-container" mixin="orbit-rotation" animation="dur: 60000">
+						<a-entity id="moon" mixin="sphere shadows" position="-5 0 0" geometry="radius: 0.2" material="src: #moon-texture"></a-entity>
+					</a-entity>
+                </a-entity>
+            </a-entity>
+			
+        </a-scene>
+		<script>
+			var vid = document.getElementById("audioloop");
+			vid.volume = 0.2;
+		</script>
+    </body>
+
+</html>

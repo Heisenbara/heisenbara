@@ -1,0 +1,286 @@
+ <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>A-Gallery-With-Four-Rooms</title>
+		<meta name="description" content="A simple gallery with an exhibition of my selected typographic an photographic artwork. Designed with A-Frame.">
+		<script src="../js/aframe.min.js"></script>
+	</head>
+	<body>
+		<a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="type: pcfsoft; autoUpdate: true" light="shadowMapType: pcfsoft" stats>
+			<a-assets>
+				<!-- North room: wall left -->
+				<img id="haus-03" src="images/variationen_haus_03.jpg">
+				<img id="haus-04" src="images/variationen_haus_04.jpg">
+				<img id="haus-05" src="images/variationen_haus_05.jpg">
+				<!-- North room: wall back -->
+				<img id="magirus-11" src="images/variationen_magirus_11.jpg">
+				<!-- North room: wall right -->
+				<img id="schrottkran-05" src="images/variationen_schrottkran_05b.jpg">
+				<img id="schrottkran-08" src="images/variationen_schrottkran_08c.jpg">
+				<img id="schrottkran-10" src="images/variationen_schrottkran_10b.jpg">
+				
+				<!-- East room: wall left -->
+				<img id="quos-ego" src="images/quos-ego.jpg">
+				<img id="sapere-aude" src="images/sapere-aude.jpg">
+				<img id="ira-furor-brevis-est" src="images/ira-furor-brevis-est.jpg">
+				<!-- East room: wall back -->
+				<img id="cui-bono" src="images/cui-bono.jpg">
+				<!-- East room: wall right -->
+				<img id="silent-leges-inter-arma" src="images/silent-leges-inter-arma.jpg">
+				<img id="de-nihilo-nihil" src="images/de-nihilo-nihil.jpg">
+				<img id="sapienti-sat" src="images/sapienti-sat.jpg">
+				
+				<!-- South room: wall left -->
+				<img id="steinwerk-03" src="images/steinwerk-03.jpg">
+				<img id="steinwerk-08" src="images/steinwerk-08.jpg">
+				<img id="steinwerk-10" src="images/steinwerk-10.jpg">
+				<!-- South room: wall back -->
+				<img id="steinwerk-13" src="images/steinwerk-13.jpg">
+				<!-- South room: wall right -->
+				<img id="steinwerk-07" src="images/steinwerk-07.jpg">
+				<img id="steinwerk-05" src="images/steinwerk-05.jpg">
+				<img id="steinwerk-06" src="images/steinwerk-06.jpg">
+				
+				<!-- West room: wall left -->
+				<img id="kryptik_zeichen-04" src="images/kryptik_zeichen-04.jpg">
+				<img id="kryptik_zeichen-03" src="images/kryptik_zeichen-03.jpg">
+				<img id="wo-ist-dein-bruder-abel" src="images/wo-ist-dein-bruder-abel.jpg">
+				<!-- West room: wall back -->
+				<img id="erloese-uns-von-dem-boesen" src="images/erloese-uns-von-dem-boesen.jpg">
+				<!-- West room: wall right -->
+				<img id="kryptik_text-01" src="images/kryptik_text-01.jpg">
+				<img id="kryptik_zeichen-01" src="images/kryptik_zeichen-01.jpg">
+				<img id="kryptik_zeichen-08" src="images/kryptik_zeichen-08.jpg">
+				
+				<a-mixin id="wall" geometry="primitive: plane; width: 3; height: 3; shader: standard"></a-mixin>
+				
+				<a-mixin id="shader" material="shader: flat"></a-mixin>
+				
+				<a-mixin id="plane-shader" material="shader: standard; color: ivory" shadow="cast: true; receive: true"></a-mixin>
+				
+				<a-mixin id="cylinder" geometry="primitive: cylinder; height: 3; radius: 0.06"></a-mixin>
+				<a-mixin id="cylinder-shader" material="shader: standard; color: palegoldenrod" shadow="cast: true; receive: true"></a-mixin>
+				
+				<a-mixin id="corner-box" geometry="primitive: box; width: 0.3; depth: 0.3; height: 3"></a-mixin>
+				<a-mixin id="box-shader" material="shader: standard; color: moccasin" shadow="cast: true; receive: true"></a-mixin>
+				
+				<a-mixin id="ceiling-light" light="type: point; intensity: 0.2; distance: 7; decay: 1; penumbra: 1; color: lightyellow; groundcolor: salmon;"></a-mixin>
+				
+				<!-- Floor/ceiling structures -->
+				<img id="wood-pattern" src="materials/wood_pattern-256.png">
+				
+				<!-- Audio -->
+				<audio id="audioloop" src="audio/Gymnopedie_No_3.mp3" autoplay="true" preload="auto" loop="true"></audio>
+			</a-assets>
+			
+			<!-- North Room Group -->
+			<a-entity class="room-north fotographic" rotation="0 90 0" position="0 0 -3">
+			
+				<!-- Left Wall Group -->
+				<a-entity class="wall-left-group" rotation="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#haus-03" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#haus-04" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#haus-05" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Left Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-left" position="0 1.5 -1.5"></a-plane>
+				</a-entity> 
+				<!-- End Left Wall Group -->
+			
+				<!-- Back Wall Group --> 
+				<a-entity class="wall-back-group" rotation="0 -90 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#magirus-11" height="1" width="1.5" position="0 1.6 -1.45"></a-image>
+					<!-- Back Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-back" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Back Wall Group --> 
+				
+				<!-- Right Wall Group -->
+				<a-entity class="wall-right-group" rotation="0 180 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#schrottkran-05" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#schrottkran-10" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#schrottkran-08" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Right Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-right" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Right Wall Group --> 
+				
+				<!-- Ceiling, Floor, Sections and Lights -->
+				<a-plane mixin="plane-shader wall" class="ceiling" position="0 3 0" rotation="90 0 0"></a-plane>
+				<a-plane class="floor" position="0 0 0" rotation="-90 0 0" width="3" height="3" material="src: #wood-pattern; color: coral; shader: flat; roughness: 1; metalness: 1;"></a-plane>
+				<!-- Poles at Back Wall -->
+				<a-box mixin="corner-box box-shader" class="section-left" position="1.6 1.5 -1.4"></a-box>
+				<a-box mixin="corner-box box-shader" class="section-right" position="1.6 1.5 1.4"></a-box>
+				<!-- Lights -->
+				<a-entity mixin="ceiling-light" class="light-ceiling" position="0 2.5 0"></a-entity>
+			</a-entity> 
+			<!-- End North Room Group -->
+			
+			<!-- ####################################################################################################### -->
+			
+			<!-- East Room Group -->
+			<a-entity class="room-east fotographic" rotation="0 0 0" position="3 0 0">
+			
+				<!-- Left Wall Group -->
+				<a-entity class="wall-left-group" rotation="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#quos-ego" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#sapere-aude" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#ira-furor-brevis-est" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Left Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-left" position="0 1.5 -1.5"></a-plane>
+				</a-entity> 
+				<!-- End Left Wall Group -->
+			
+				<!-- Back Wall Group --> 
+				<a-entity class="wall-back-group" rotation="0 -90 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#cui-bono" height="1" width="1.5" position="0 1.6 -1.45"></a-image>
+					<!-- Back Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-back" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Back Wall Group --> 
+				
+				<!-- Right Wall Group -->
+				<a-entity class="wall-right-group" rotation="0 180 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#silent-leges-inter-arma" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#de-nihilo-nihil" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#sapienti-sat" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Right Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-right" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Right Wall Group --> 
+				
+				<!-- Ceiling, Floor, Sections and Lights -->
+				<a-plane mixin="plane-shader wall" class="ceiling" position="0 3 0" rotation="90 0 0"></a-plane>
+				<a-plane class="floor" position="0 0 0" rotation="-90 0 0" width="3" height="3" material="src: #wood-pattern; color: coral; shader: flat; roughness: 1; metalness: 1;"></a-plane>
+				<!-- Poles at Back Wall -->
+				<a-box mixin="corner-box box-shader" class="section-left" position="1.6 1.5 -1.4"></a-box>
+				<a-box mixin="corner-box box-shader" class="section-right" position="1.6 1.5 1.4"></a-box>
+				<!-- Lights -->
+				<a-entity mixin="ceiling-light" class="light-ceiling" position="0 2.5 0"></a-entity>
+			</a-entity> 
+			<!-- End East Room Group -->
+			
+			<!-- ####################################################################################################### -->
+			
+			<!-- South Room Group -->
+			<a-entity class="room-south fotographic" rotation="0 -90 0" position="0 0 3">
+			
+				<!-- Left Wall Group -->
+				<a-entity class="wall-left-group" rotation="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#steinwerk-03" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#steinwerk-08" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#steinwerk-10" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Left Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-left" position="0 1.5 -1.5"></a-plane>
+				</a-entity> 
+				<!-- End Left Wall Group -->
+			
+				<!-- Back Wall Group --> 
+				<a-entity class="wall-back-group" rotation="0 -90 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#steinwerk-13" height="1" width="1.5" position="0 1.6 -1.45"></a-image>
+					<!-- Back Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-back" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Back Wall Group --> 
+				
+				<!-- Right Wall Group -->
+				<a-entity class="wall-right-group" rotation="0 180 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#steinwerk-07" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#steinwerk-05" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#steinwerk-06" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Right Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-right" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Right Wall Group --> 
+				
+				<!-- Ceiling, Floor, Sections and Lights -->
+				<a-plane mixin="plane-shader wall" class="ceiling" position="0 3 0" rotation="90 0 0"></a-plane>
+				<a-plane class="floor" position="0 0 0" rotation="-90 0 0" width="3" height="3" material="src: #wood-pattern; color: coral; shader: flat; roughness: 1; metalness: 1;"></a-plane>
+				<!-- Poles at Back Wall -->
+				<a-box mixin="corner-box box-shader" class="section-left" position="1.6 1.5 -1.4"></a-box>
+				<a-box mixin="corner-box box-shader" class="section-right" position="1.6 1.5 1.4"></a-box>
+				<!-- Lights -->
+				<a-entity mixin="ceiling-light" class="light-ceiling" position="0 2.5 0"></a-entity>
+			</a-entity> 
+			<!-- End South Room Group -->
+			
+			<!-- ####################################################################################################### -->
+			
+			<!-- West Room Group -->
+			<a-entity class="room-west fotographic" rotation="0 -180 0" position="-3 0 0">
+			
+				<!-- Left Wall Group -->
+				<a-entity class="wall-left-group" rotation="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#kryptik_zeichen-04" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#kryptik_zeichen-03" height="1" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#wo-ist-dein-bruder-abel" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Left Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-left" position="0 1.5 -1.5"></a-plane>
+				</a-entity> 
+				<!-- End Left Wall Group -->
+			
+				<!-- Back Wall Group --> 
+				<a-entity class="wall-back-group" rotation="0 -90 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#erloese-uns-von-dem-boesen" height="1" width="1.5" position="0 1.6 -1.45"></a-image>
+					<!-- Back Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-back" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Back Wall Group --> 
+				
+				<!-- Right Wall Group -->
+				<a-entity class="wall-right-group" rotation="0 180 0" position="0 0 0">
+					<!-- Images -->
+					<a-image mixin="shader" src="#kryptik_text-01" height="1" width="0.8" position="-0.9 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#kryptik_zeichen-01" width="0.8" position="0 1.6 -1.45"></a-image>
+					<a-image mixin="shader" src="#kryptik_zeichen-08" height="1" width="0.8" position="0.9 1.6 -1.45"></a-image>
+					<!-- Right Wall -->
+					<a-plane mixin="plane-shader wall" class="wall-right" position="0 1.5 -1.5"></a-plane>
+				</a-entity>
+				<!-- End Right Wall Group --> 
+				
+				<!-- Ceiling, Floor, Sections and Lights -->
+				<a-plane mixin="plane-shader wall" class="ceiling" position="0 3 0" rotation="90 0 0"></a-plane>
+				<a-plane class="floor" position="0 0 0" rotation="-90 0 0" width="3" height="3" material="src: #wood-pattern; color: coral; shader: flat; roughness: 1; metalness: 1;"></a-plane>
+				<!-- Poles at Back Wall -->
+				<a-box mixin="corner-box box-shader" class="section-left" position="1.6 1.5 -1.4"></a-box>
+				<a-box mixin="corner-box box-shader" class="section-right" position="1.6 1.5 1.4"></a-box>
+				<!-- Lights -->
+				<a-entity mixin="ceiling-light" class="light-ceiling" position="0 2.5 0"></a-entity>
+			</a-entity> 
+			<!-- End West Room Group -->
+			
+			<!-- ####################################################################################################### -->
+			
+			<!-- Center of Gallery Group -->
+			<a-entity class="room-center" rotation="0 0 0">
+				<!-- Ceiling and Floor -->
+				<a-plane mixin="plane-shader wall" class="ceiling" position="0 3 0" rotation="90 0 0"></a-plane>
+				<a-plane class="floor" position="0 0 0" rotation="-90 0 0" width="3" height="3" material="src: #wood-pattern; color: lightsalmon; shader: flat; roughness: 1; metalness: 1;"></a-plane>
+				<!-- Columns in the Corners -->
+				<a-cylinder mixin="cylinder cylinder-shader" class="column-front-left" position="-1.5 1.5 -1.5"></a-cylinder>
+				<a-cylinder mixin="cylinder cylinder-shader" class="column-front-right" position="1.5 1.5 -1.5"></a-cylinder>
+				<a-cylinder mixin="cylinder cylinder-shader" class="column-back-right" position="1.5 1.5 1.5"></a-cylinder>
+				<a-cylinder mixin="cylinder cylinder-shader" class="column-back-left" position="-1.5 1.5 1.5"></a-cylinder>
+				<!-- Lights -->
+				<a-entity class="light-ceiling" light="type: point; castShadow:true; intensity: 0.7; distance: 15; decay: 1; color: lightyellow; groundcolor: coral;" position="0 1.8 0"></a-entity>
+			</a-entity>
+			<!-- End Center of Gallery Group -->
+			
+			<!-- Globals -->
+			<a-entity light="type: hemisphere; color: seashell; groundColor: salmon; intensity: 0.2"></a-entity>
+			
+		</a-scene>
+	</body>
+</html>
