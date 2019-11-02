@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+	<title>A Challenge in a Rainy Voxel World</title>
+    
+	<script src="../js/three.min.js"></script>
+	<script src="../js/aframe.min.js"></script>
+	<script src="../js/aframe-teleport-controls.min.js"></script>
+	
+	<style>
+		body {
+		  width: 100vw;
+		  height: 100vh;
+		  margin: 0;
+		  background: black;
+		  overflow: hidden;
+		}
+	</style>
+  </head>
+  <body>
+	
+	<script>
+		// Play audio on fuse:
+		function fuse(){
+		   var audio = document.getElementById('fuse');
+		   audio.play();
+		   audio.volume = 0.1;
+        }
+				 
+		// Display item when cameraRig is in lastFuse position, id.item is set by mixin:
+		var showItem = function() {
+			document.getElementById('item').setAttribute('visible', true);
+		}
+		
+		//var inventory = null;
+		
+		//entityEl.parentNode.removeChild(entityEl);
+		
+		function pick(){
+			//var pickup_elements = document.getElementsByClassName('item');
+			//document.getElementById('item').remove();
+			var sceneEl = document.querySelector('a-scene');
+			var entityEl = document.getElementById('item');
+			
+			var sphere = document.querySelector('#item');
+			sphere.parentNode.removeChild(sphere);
+			
+			//entityEl.parentNode.removeChild(entityEl);
+			/*
+			for(var i = 0; i < document.getElementById('item').length; i++) {
+			document.getElementsById('item')[i].addEventListener('click', function(){
+				inventory.addItem(this);
+				
+				//checkTutorialRules();
+				return false;
+			});
+		} */
+			// Play audio when item is clicked:
+			var audio = document.getElementById('pick');
+			audio.addEventListener('ended', function() {
+			this.currentTime = 0;
+			this.play();
+		}, true);
+			audio.play();
+			audio.volume = 0.2;
+		}
+		
+		// When clicked, add item to the inventory and remove from scene:
+		//document.getElementById('item').setAttribute("visible", false);
+		
+		
+		
+		// The inventory to store the items in.
+		// Set size, position and opacity when in closed condition.
+		// Change size, position and opacity when clicked and show the content:
+		var showInventory = function() {
+			document.getElementById('inventoryBox').setAttribute('material', 'color: green');
+			document.getElementById('inventory').setAttribute('visible', true);
+			document.getElementById('inventory').setAttribute('position', '0.4 0 0');
+			document.getElementById('inventory').setAttribute('animation', 'property: position; to: 0.4 0 0; easing: linear; dur: 100');
+		} 
+		// Reset changes when closed:
+		var hideInventory = function() {
+			document.getElementById('inventoryBox').setAttribute('material', 'color: yellow');
+			document.getElementById('inventory').setAttribute('visible', false);
+		} 
+	</script>
+	
+	<a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" light="defaultLightsEnabled: false" shadow="type: pcfsoft; autoUpdate: true" light="shadowMapType: basic" stats>
+		<!-- Objects -->
+		<a-assets>
+			<a-asset-item id="platform-obj" src="models/platform-blender-logo.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="platform-mtl" src="models/platform-blender-logo.mtl" crossorigin="anonymous"></a-asset-item>
+			
+			<a-asset-item id="lionsgate-obj" src="models/lionsgate.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="lionsgate-mtl" src="models/lionsgate.mtl" crossorigin="anonymous"></a-asset-item>
+			
+			<a-asset-item id="boxes-obj" src="models/boxes.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="boxes-mtl" src="models/boxes.mtl" crossorigin="anonymous"></a-asset-item>
+			
+			<a-asset-item id="lab-obj" src="models/lab.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="lab-mtl" src="models/lab.mtl" crossorigin="anonymous"></a-asset-item>
+			
+			<a-asset-item id="construct-obj" src="models/construct.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="construct-mtl" src="models/construct.mtl" crossorigin="anonymous"></a-asset-item>
+			
+			<!-- Item to pick -->
+			<a-asset-item id="item-obj" src="models/item-box-open.obj" crossorigin="anonymous"></a-asset-item>
+			<a-asset-item id="item-mtl" src="models/item-box-open.mtl" crossorigin="anonymous"></a-asset-item>
+		</a-assets>
+		
+		<!-- Audio -->
+		<a-assets>
+			<audio id="fuse" src="audio/Clap-sound.mp3" crossorigin="anonymous"></audio>
+			<audio id="pick" src="audio/Level-up-sound-effect.mp3" crossorigin="anonymous"></audio>
+		
+		</a-assets>
+		<!-- Assets -->
+		<a-assets>
+			<!-- Pointlights on platforms and in the stations. -->
+			<a-mixin id="pointlight" light="type: point; intensity: 0.35; distance: 5; decay: 1; penumbra: 1; color: lightyellow" position="0 0.67 0"></a-mixin>
+			<!-- Nearly same light as id#pointlight with less intensity. -->
+			<a-mixin id="itemlight" light="type: point; intensity: 0.6; distance: 3; decay: 1; penumbra: 1; color: lightyellow"></a-mixin>
+			<!-- The platforms that lead to the next station. -->
+			<a-mixin id="platform" obj-model="obj: #platform-obj; mtl: #platform-mtl"></a-mixin>
+			<!--  Teleporter is a rotated a-box -->
+			<a-mixin id="teleporter" geometry="width: 0.1; height: 0.1; depth: 0.1;" material="color: yellow; transparent: true; opacity: 0.9" rotation="45 45 45"></a-mixin>
+			
+			<!-- Id#teleporter last a-box before picking the item. -->
+			<a-mixin id="lastFuse"></a-mixin>
+			<!-- Item to pick. -->
+			<a-mixin id="item" obj-model="obj: #item-obj; mtl: #item-mtl" scale="0.1 0.1 0.1" rotation="45 45 45" animation="property: rotation; from: 45 45 45; to: 45 405 45; easing: linear; loop: true; dur: 5000" visible="false"></a-mixin>
+			
+			<!-- Shadows if possible. -->
+			<a-mixin id="shadow-cast" shadow="cast: true"></a-mixin>
+			<a-mixin id="shadow-receive" shadow="receive: true"></a-mixin>
+			
+			<!-- Fusing-animation. -->
+			<a-mixin id="fusing" begin="fusing" easing="ease" attribute="scale" fill="none" from="1 1 1" to="0 0 0" dur="500"></a-mixin>
+			<!-- Inventory-animation. -->
+			<a-mixin id="invFuse" begin="fusing" easing="ease"dur="500"></a-mixin>
+			
+			<!-- Inventory-container for positioning. -->
+			<a-mixin id="invBoxParent" position="0 -0.5 -1" rotation="0 0 0"></a-mixin>
+			
+			<!-- Inventory-box in closed condition. -->
+			<a-mixin id="inventoryBox" geometry="primitive: box; width: 0.15; height: 0.15; depth: 0.15" material="color: yellow; opacity: 1" visible="true"></a-mixin>
+			<!-- Inventory: only  show when active. -->
+			<a-mixin id="inventory" visible="false"></a-mixin>
+			<!-- Close-box if Inventory-box is open. -->
+			<a-mixin id="closeBox" geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.1" material="color: red; opacity: 1"></a-mixin>
+		</a-assets>
+		
+		<!-- And now: Build the Scene -->
+		<!-- Player -->
+		<a-entity id="player" class="player" position="0 1.6 0">
+			<a-entity id="cameraRig">
+				<a-entity id="camera" class="camera" camera look-controls wasd-controls="enabled: true">
+					<a-entity id="cursor" class="cursor" position="0 0 -0.1" geometry="primitive: ring; radiusOuter: 0.005; radiusInner: 0.004" material="color: orange; shader: flat" cursor="fuse: true">
+						<!--<a-entity raycaster="objects:.clickable; showLine: true; far: 9.2; interval: 1000;" line="color: red; opacity: 0.5"></a-entity>-->
+						<a-animation mixin="fusing"></a-animation>
+					</a-entity>
+					
+					<a-entity id="left-hand" teleport-controls="cameraRig: #cameraRig; teleportOrigin: #camera"></a-entity>
+					<a-entity id="right-hand" teleport-controls="cameraRig: #cameraRig; teleportOrigin: #camera"></a-entity>
+				</a-entity>
+			</a-entity>
+			
+			<!-- The inventory: #invBoxParent with #inventoryBox and #inventory. -->
+			<a-entity mixin="invBoxParent" class="inventory-box-parent">
+				<!-- The inventory-box. -->
+				<a-entity mixin="inventoryBox invFuse" class="inventory-box clickable" onClick="fuse(); showInventory()"></a-entity>
+				<!-- The inventory: Items in a row. -->
+				<a-entity mixin="inventory">
+					<a-entity class="item-box" position="-0.24 0 0">
+						<a-entity class="item clickable" mixin="item shadow-cast shadow-receive" onClick="pick()" visible="true">
+						<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
+						</a-entity>
+					</a-entity>
+					<a-entity class="item-box" position="-0.08 0 0">
+						<a-entity class="item clickable" mixin="item shadow-cast shadow-receive" onClick="pick()" visible="true">
+						<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
+						</a-entity>
+					</a-entity>
+					<a-entity class="item-box" position="0.08 0 0">
+						<a-entity class="item clickable" mixin="item shadow-cast shadow-receive" onClick="pick()" visible="true">
+						<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
+						</a-entity>
+					</a-entity>
+					<a-entity class="item-box" position="0.24 0 0">
+						<a-entity class="item clickable" mixin="item shadow-cast shadow-receive" onClick="pick()" visible="true">
+						<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
+						</a-entity>
+					</a-entity> 
+					<!-- The Close-box. -->
+					<a-entity mixin="closeBox invFuse" class="close-box clickable" position="0.4 0 0" onClick="fuse(); hideInventory()"></a-entity>
+				</a-entity>
+			</a-entity>
+			
+		</a-entity>
+		
+		<!-- Platform, the player's location. This one is centered for start/end of challenge -->
+		<a-entity class="platform-box clickable" position="0 0.7 0" rotation="0 35 0" onClick="document.querySelector('#cameraRig').setAttribute('position','0 0.7 0'); fuse()">
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
+		</a-entity>
+		<!-- End Platform. -->
+		
+		<a-entity id="itemBox" class="item-box clickable" position="1 1.6 -9" onClick="fuse(); pick()">
+				<a-entity class="item" mixin="item shadow-cast shadow-receive">
+					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
+				</a-entity>
+			</a-entity>
+		
+		<!-- Platform in front: minus-z 7 -->
+		<a-entity class="platform-box clickable" position="0 0 -7" rotation="0 -45 0" onClick="document.querySelector('#cameraRig').setAttribute('position','0 0 -7'); fuse(); showItem()">
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
+		</a-entity>
+		<!-- End Platform. -->
+		
+		
+		
+		<!-- LIGHTS AND ENVIRONMENT -->
+			<a-entity light="type: hemisphere; color: seashell; intensity: 0.6"></a-entity>
+		<!-- END LIGHTS AND ENVIRONMENT -->
+    </a-scene>
+	
+  </body>
+</html>
