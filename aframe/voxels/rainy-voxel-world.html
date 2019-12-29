@@ -121,10 +121,10 @@
 			document.getElementById('item').setAttribute('position', '-1000 -1000 -1000');
 			fuse();
 			
-			// Play audio when item is clicked:
-			var audio = document.getElementById('pick');
-			audio.play();
-			audio.volume = 0.2;
+		// Play audio when item is clicked:
+		var audio = document.getElementById('pick');
+		audio.play();
+		audio.volume = 0.2;
 		}
 	</script>
 	
@@ -163,6 +163,8 @@
 		
 		<!-- Mixins: -->
 		<a-assets>
+			<!-- Set shader to standard -->
+			<a-mixin id="shader-standard" material="shader: standard"></a-mixin>
 			<!-- Pointlights on platforms and in the stations. -->
 			<a-mixin id="pointlight" light="type: point; intensity: 0.35; distance: 5; decay: 1; penumbra: 1; color: lightyellow" position="0 0.67 0"></a-mixin>
 			<!-- Nearly same light as id#pointlight with less intensity. -->
@@ -170,7 +172,7 @@
 			<!-- The platforms that lead to the next station. -->
 			<a-mixin id="platform" obj-model="obj: #platform-obj; mtl: #platform-mtl"></a-mixin>
 			<!--  Teleporter is a rotated a-box -->
-			<a-mixin id="teleporter" geometry="width: 0.1; height: 0.1; depth: 0.1;" material="color: yellow; transparent: true; opacity: 0.9" rotation="45 45 45"></a-mixin>
+			<a-mixin id="teleporter" geometry="primitive: sphere; radius: 0.05" material="color: yellow; transparent: true; opacity: 0.9"></a-mixin>
 			
 			<!-- Id#teleporter last a-box before picking the item. -->
 			<a-mixin id="lastFuse"></a-mixin>
@@ -202,28 +204,28 @@
 		
 		<!-- Platform, the player's location. This one is centered for start/end of challenge -->
 		<a-entity class="platform-box clickable" position="0 0.7 0" rotation="0 35 0" onClick="document.querySelector('#cameraRig').setAttribute('position','0 0.7 0'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Platform in front: minus-z 7 -->
 		<a-entity class="platform-box clickable" position="0 0 -7" rotation="0 -45 0" onClick="document.querySelector('#cameraRig').setAttribute('position','0 0 -7'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Platform in front: minus-z 14 -->
 		<a-entity class="platform-box clickable" position="-1 0 -14" rotation="0 45 0" onClick="document.querySelector('#cameraRig').setAttribute('position','-1 0 -14'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Lionsgate-world with two local lights. Position in front: minus-z 21 -->
 		<a-entity class="lionsgate-box" position="-3 1 -21" rotation="0 25 0">
-			<a-entity class="lionsgate" obj-model="obj: #lionsgate-obj; mtl: #lionsgate-mtl" mixin="shadow-cast shadow-receive"></a-entity>
+			<a-entity class="lionsgate" obj-model="obj: #lionsgate-obj; mtl: #lionsgate-mtl" mixin="shadow-cast shadow-receive shader-standard"></a-entity>
 			<!-- Lights -->
 			<a-entity class="light-lionsgate-1" mixin="pointlight shadow-cast" position="-0.6 0.53 1.2"></a-entity>
 			<a-entity class="light-lionsgate-2" mixin="pointlight shadow-cast" position="1.25 0.15 -0.55"></a-entity>
@@ -232,12 +234,12 @@
 		
 		<!-- Teleporters and Item for Lionsgate-world -->
 		<a-entity class="lionsgate-teleporters">
-			<a-box class="clickable" mixin="teleporter" position="-2.65 1 -20" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.65 -0.6 -20'); fuse()"></a-box>
-			<a-box class="clickable" mixin="teleporter" position="-3.4 1 -21.62" onClick="document.querySelector('#cameraRig').setAttribute('position','-3.4 -0.6 -21.62'); fuse()"></a-box>
-			<a-box class="clickable" mixin="lastFuse teleporter" position="-2.245 1 -22.2" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.245 -0.6 -22.2'); fuse(); showItem()"></a-box>
+			<a-entity class="clickable" mixin="teleporter" position="-2.65 1 -20" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.65 -0.6 -20'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="teleporter" position="-3.4 1 -21.62" onClick="document.querySelector('#cameraRig').setAttribute('position','-3.4 -0.6 -21.62'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="lastFuse teleporter" position="-2.245 1 -22.2" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.245 -0.6 -22.2'); fuse(); showItem()"></a-entity>
 			<!-- Item to pick up -->
 			<a-entity id="itemBox" class="item-box" position="-1.78 0.914 -21.86" onClick="pick()">
-				<a-entity id="lion-item" class="item clickable" mixin="item shadow-cast shadow-receive">
+				<a-entity id="lion-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
 			</a-entity>
@@ -245,20 +247,20 @@
 		
 		<!-- Platform on right: plus-x 7 -->
 		<a-entity class="platform-box clickable" position="7 -3 -2" rotation="0 -30 0" onClick="document.querySelector('#cameraRig').setAttribute('position','7 -3 -2'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		<!-- Platform on right: plus-x 14 -->
 		<a-entity class="platform-box clickable" position="14 -7 -5.5" rotation="0 30 0" onClick="document.querySelector('#cameraRig').setAttribute('position','14 -7 -5.5'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Construct-box-world with two local lights. Position on the right: plus-x 21 -->
 		<a-entity class="construct-box-world" position="21 -12 -11" rotation="0 -40 0">
-			<a-entity class="construct-box" obj-model="obj: #construct-obj; mtl: #construct-mtl" mixin="shadow-cast shadow-receive"></a-entity>
+			<a-entity class="construct-box" obj-model="obj: #construct-obj; mtl: #construct-mtl" mixin="shadow-cast shadow-receive shader-standard"></a-entity>
 			<!-- Lights -->
 			<a-entity class="light-construct-1" mixin="pointlight shadow-cast" position="-0.94 0.56 -0.14"></a-entity>
 			<a-entity class="light-construct-2" mixin="pointlight shadow-cast" position="0.36 0.4 -0.18"></a-entity>
@@ -268,14 +270,14 @@
 		
 		<!-- Teleporters and Item for Construct-box-world -->
 		<a-entity class="construct-box-teleporters">
-			<a-box class="clickable" mixin="teleporter" position="20.3 -9.6 -10.75" onClick="document.querySelector('#cameraRig').setAttribute('position','20.3 -11.18 -10.75'); fuse()"></a-box>
-			<a-box class="clickable" mixin="teleporter" position="20.88 -9.6 -10.57" onClick="document.querySelector('#cameraRig').setAttribute('position','20.88 -11.18 -10.57'); fuse()"></a-box>
-			<a-box class="clickable" mixin="teleporter" position="21.126 -10.8 -10.35" onClick="document.querySelector('#cameraRig').setAttribute('position','21.126 -12.4 -10.35'); fuse()"></a-box>
-			<a-box class="clickable" mixin="teleporter" position="21.526 -10.8 -11.16" onClick="document.querySelector('#cameraRig').setAttribute('position','21.526 -12.4 -11.16'); fuse()"></a-box>
-			<a-box class="clickable" mixin="lastFuse teleporter" position="21.37 -11.66 -10.98" onClick="document.querySelector('#cameraRig').setAttribute('position','21.37 -13.26 -10.98'); fuse(); showItem()"></a-box>
+			<a-entity class="clickable" mixin="teleporter" position="20.3 -9.6 -10.75" onClick="document.querySelector('#cameraRig').setAttribute('position','20.3 -11.18 -10.75'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="teleporter" position="20.88 -9.6 -10.57" onClick="document.querySelector('#cameraRig').setAttribute('position','20.88 -11.18 -10.57'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="teleporter" position="21.126 -10.8 -10.35" onClick="document.querySelector('#cameraRig').setAttribute('position','21.126 -12.4 -10.35'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="teleporter" position="21.526 -10.8 -11.16" onClick="document.querySelector('#cameraRig').setAttribute('position','21.526 -12.4 -11.16'); fuse()"></a-entity>
+			<a-entity class="clickable" mixin="lastFuse teleporter" position="21.37 -11.66 -10.98" onClick="document.querySelector('#cameraRig').setAttribute('position','21.37 -13.26 -10.98'); fuse(); showItem()"></a-entity>
 			<!-- Item to pick up -->
 			<a-entity id="itemBox" class="item-box" position="21.12 -11.84 -11.38" onClick="pick()">
-				<a-entity id="construct-item" class="item clickable" mixin="item shadow-cast shadow-receive">
+				<a-entity id="construct-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
 			</a-entity>
@@ -284,20 +286,20 @@
 		
 		<!-- Platform on left: minus-x 7 -->
 		<a-entity class="platform-box clickable" position="-7 1.5 0.5" rotation="0 60 0" onClick="document.querySelector('#cameraRig').setAttribute('position','-7 1.5 0.5'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		<!-- Platform on left: minus-x 14 -->
 		<a-entity class="platform-box clickable" position="-14 4 0" rotation="0 90 0" onClick="document.querySelector('#cameraRig').setAttribute('position','-14 4 0'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Boxes-box-world with two local lights. Position on the left: minus-x 21 -->
 		<a-entity class="boxes-box" position="-21 7 3" rotation="0 25 3">
-			<a-entity class="boxes" obj-model="obj: #boxes-obj; mtl: #boxes-mtl" mixin="shadow-cast shadow-receive"></a-entity>
+			<a-entity class="boxes" obj-model="obj: #boxes-obj; mtl: #boxes-mtl" mixin="shadow-cast shadow-receive shader-standard"></a-entity>
 			<!-- Lights -->
 			<a-entity class="light-boxes-1" mixin="pointlight shadow-cast" position="0 1.7 -0.1"></a-entity>
 			<a-entity class="light-boxes-2" mixin="pointlight shadow-cast" position="0.17 1.1 0.36"></a-entity>
@@ -314,7 +316,7 @@
 			<a-entity class="clickable" mixin="lastFuse teleporter" position="-20.98 9.2 3.3" onClick="document.querySelector('#cameraRig').setAttribute('position','-20.98 7.6 3.3'); fuse(); showItem()"></a-entity>
 			<!-- Item to pick up -->
 			<a-entity id="itemBox" class="item-box" position="-21.26 9.2 2.24" onClick="pick()">
-				<a-entity id="boxes-item" class="item clickable" mixin="item shadow-cast shadow-receive">
+				<a-entity id="boxes-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
 			</a-entity>
@@ -323,20 +325,20 @@
 		
 		<!-- Platform in back-right: y-plus -->
 		<a-entity class="platform-box clickable" position="2 2 7" rotation="0 180 0" onClick="document.querySelector('#cameraRig').setAttribute('position','2 2 7'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		<!-- Platform in back-right: y-plus-plus -->
 		<a-entity class="platform-box clickable" position="5 4 14" rotation="0 210 0" onClick="document.querySelector('#cameraRig').setAttribute('position','5 4 14'); fuse()">
-			<a-entity class="platform" mixin="platform shadow-cast shadow-receive"></a-entity>
+			<a-entity class="platform" mixin="platform shadow-cast shadow-receive shader-standard"></a-entity>
 			<a-entity class="light-platform-1" mixin="pointlight shadow-cast"></a-entity>
 		</a-entity>
 		<!-- End Platform. -->
 		
 		<!-- Lab-box-world with two local lights. Position in the back: plus-z 21, plus-x 10 -->
 		<a-entity class="lab-box-world" position="10 7 21" rotation="0 200 0">
-			<a-entity class="lab-box" obj-model="obj: #lab-obj; mtl: #lab-mtl" mixin="shadow-cast shadow-receive"></a-entity>
+			<a-entity class="lab-box" obj-model="obj: #lab-obj; mtl: #lab-mtl" mixin="shadow-cast shadow-receive shader-standard"></a-entity>
 			<!-- Lights -->
 			<a-entity class="light-lab-1" mixin="pointlight shadow-cast" position="1 2.43 0.45"></a-entity>
 			<a-entity class="light-lab-2" mixin="pointlight shadow-cast" position="0.9 2.5 -1"></a-entity>
@@ -351,7 +353,7 @@
 			<a-entity class="clickable" mixin="lastFuse teleporter" position="9.8 7.25 21.3" onClick="document.querySelector('#cameraRig').setAttribute('position','9.8 5.7 21.3'); fuse(); showItem()"></a-entity>
 			<!-- Item to pick up -->
 			<a-entity id="itemBox" class="item-box" position="9.72 7.25 21.03" onClick="pick()">
-				<a-entity id="lab-item" class="item clickable" mixin="item shadow-cast shadow-receive">
+				<a-entity id="lab-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
 			</a-entity>
