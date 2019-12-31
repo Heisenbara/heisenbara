@@ -7,6 +7,7 @@
 	<script src="../js/three.min.js"></script>
 	<script src="../js/aframe.min.js"></script>
 	<script src="../js/aframe-teleport-controls.min.js"></script>
+	<script src="../js/webvr-polyfill.js"></script>
   </head>
   <body>
 
@@ -171,10 +172,10 @@
 			<a-mixin id="itemlight" light="type: point; intensity: 0.6; distance: 3; decay: 1; penumbra: 1; color: lightyellow"></a-mixin>
 			<!-- The platforms that lead to the next station. -->
 			<a-mixin id="platform" obj-model="obj: #platform-obj; mtl: #platform-mtl"></a-mixin>
-			<!--  Teleporter is a rotated a-box -->
+			<!--  Teleporter is a a-sphere -->
 			<a-mixin id="teleporter" geometry="primitive: sphere; radius: 0.05" material="color: yellow; transparent: true; opacity: 0.9"></a-mixin>
 			
-			<!-- Id#teleporter last a-box before picking the item. -->
+			<!-- Id#teleporter last a-sphere before picking the item. -->
 			<a-mixin id="lastFuse"></a-mixin>
 			<!-- Item to pick. -->
 			<a-mixin id="item" obj-model="obj: #item-obj; mtl: #item-mtl" scale="0.1 0.1 0.1" rotation="45 45 45" transparent="true" opacity="1" animation="property: rotation; from: 45 45 45; to: 45 405 45; easing: linear; loop: true; dur: 5000" visible="false"></a-mixin>
