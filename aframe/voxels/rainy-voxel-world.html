@@ -111,21 +111,51 @@
 		   audio.volume = 0.1;
         }
 		
-		// Display item when cameraRig is in lastFuse position, id.item is set by mixin:
-		var showItem = function() {
-			document.getElementById('item').setAttribute('visible', true);
+		// Display item when cameraRig is in lastFuse position:
+		var showLionsItem = function() {
+			document.getElementById('lionsItem').setAttribute('visible', true);
 		}
 		
-		// When clicked, hide item from scene, id.item is set by mixin:		
-		var pick = function(){
-			document.getElementById('item').setAttribute('position', '-1000 -1000 -1000');
-			fuse();
-			
-		// Play audio when item is clicked:
-		var audio = document.getElementById('pick');
-		audio.play();
-		audio.volume = 0.2;
+		var showConstructItem = function() {
+			document.getElementById('constructItem').setAttribute('visible', true);
 		}
+		
+		var showLabItem = function() {
+			document.getElementById('labItem').setAttribute('visible', true);
+		}
+		
+		var showBoxesItem = function() {
+			document.getElementById('boxesItem').setAttribute('visible', true);
+		}
+		
+		// When clicked, hide item from scene:		
+		var pickLionsItem = function() {
+			document.getElementById('lionsItem').setAttribute('position', '-1000 -1000 -1000');
+			var audio = document.getElementById('pick');
+			audio.play();
+			audio.volume = 0.2;
+			}
+			
+		var pickConstructItem = function() {
+			document.getElementById('constructItem').setAttribute('position', '-1000 -1000 -1000');
+			var audio = document.getElementById('pick');
+			audio.play();
+			audio.volume = 0.2;
+			}
+		
+		var pickBoxesItem = function() {
+			document.getElementById('boxesItem').setAttribute('position', '-1000 -1000 -1000');
+			var audio = document.getElementById('pick');
+			audio.play();
+			audio.volume = 0.2;
+			}
+		
+		var pickLabItem = function() {
+			document.getElementById('labItem').setAttribute('position', '-1000 -1000 -1000');
+			var audio = document.getElementById('pick');
+			audio.play();
+			audio.volume = 0.2;
+			}
 	</script>
 	
 	<a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" light="defaultLightsEnabled: false" shadow="type: pcfsoft; autoUpdate: true" light="shadowMapType: basic" stats>
@@ -177,7 +207,7 @@
 			<!-- Id#teleporter last a-sphere before picking the item. -->
 			<a-mixin id="lastFuse"></a-mixin>
 			<!-- Item to pick. -->
-			<a-mixin id="item" obj-model="obj: #item-obj; mtl: #item-mtl" scale="0.1 0.1 0.1" rotation="45 45 45" transparent="true" opacity="1" animation="property: rotation; from: 45 45 45; to: 45 405 45; easing: linear; loop: true; dur: 5000" visible="false"></a-mixin>
+			<a-mixin id="item" obj-model="obj: #item-obj; mtl: #item-mtl" scale="0.1 0.1 0.1" rotation="45 45 45" transparent="true" opacity="1" animation="property: rotation; from: 45 45 45; to: 45 405 45; easing: linear; loop: true; dur: 5000"></a-mixin>
 			
 			<!-- Shadows if possible. -->
 			<a-mixin id="shadow-cast" shadow="cast: true"></a-mixin>
@@ -236,9 +266,9 @@
 		<a-entity class="lionsgate-teleporters">
 			<a-entity class="clickable" mixin="teleporter" position="-2.65 1 -20" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.65 -0.6 -20'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="-3.4 1 -21.62" onClick="document.querySelector('#cameraRig').setAttribute('position','-3.4 -0.6 -21.62'); fuse()"></a-entity>
-			<a-entity class="clickable" mixin="lastFuse teleporter" position="-2.245 1 -22.2" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.245 -0.6 -22.2'); fuse(); showItem()"></a-entity>
+			<a-entity id="lastFuseLions" class="clickable" mixin="lastFuse teleporter" position="-2.245 1 -22.2" onClick="document.querySelector('#cameraRig').setAttribute('position','-2.245 -0.6 -22.2'); fuse(); showLionsItem()"></a-entity>
 			<!-- Item to pick up -->
-			<a-entity id="itemBox" class="item-box" position="-1.78 0.914 -21.86" onClick="pick()">
+			<a-entity id="lionsItem" class="item-box" position="-1.78 0.914 -21.86" visible="false" onClick="pickLionsItem()">
 				<a-entity id="lion-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
@@ -274,9 +304,9 @@
 			<a-entity class="clickable" mixin="teleporter" position="20.88 -9.6 -10.57" onClick="document.querySelector('#cameraRig').setAttribute('position','20.88 -11.18 -10.57'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="21.126 -10.8 -10.35" onClick="document.querySelector('#cameraRig').setAttribute('position','21.126 -12.4 -10.35'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="21.526 -10.8 -11.16" onClick="document.querySelector('#cameraRig').setAttribute('position','21.526 -12.4 -11.16'); fuse()"></a-entity>
-			<a-entity class="clickable" mixin="lastFuse teleporter" position="21.37 -11.66 -10.98" onClick="document.querySelector('#cameraRig').setAttribute('position','21.37 -13.26 -10.98'); fuse(); showItem()"></a-entity>
+			<a-entity id="lastFuseConstruct" class="clickable" mixin="lastFuse teleporter" position="21.37 -11.66 -10.98" onClick="document.querySelector('#cameraRig').setAttribute('position','21.37 -13.26 -10.98'); fuse(); showConstructItem()"></a-entity>
 			<!-- Item to pick up -->
-			<a-entity id="itemBox" class="item-box" position="21.12 -11.84 -11.38" onClick="pick()">
+			<a-entity id="constructItem" class="item-box" position="21.12 -11.84 -11.38" visible="false" onClick="pickConstructItem()">
 				<a-entity id="construct-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
@@ -313,9 +343,9 @@
 			<a-entity class="clickable" mixin="teleporter" position="-21.35 7.74 2.4" onClick="document.querySelector('#cameraRig').setAttribute('position','-21.35 6.14 2.4'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="-21.26 8.45 2.62" onClick="document.querySelector('#cameraRig').setAttribute('position','-21.26 6.85 2.62'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="-20.9 8.45 3.394" onClick="document.querySelector('#cameraRig').setAttribute('position','-20.9 6.85 3.394'); fuse()"></a-entity>
-			<a-entity class="clickable" mixin="lastFuse teleporter" position="-20.98 9.2 3.3" onClick="document.querySelector('#cameraRig').setAttribute('position','-20.98 7.6 3.3'); fuse(); showItem()"></a-entity>
+			<a-entity id="lastFuseBoxes" class="clickable" mixin="lastFuse teleporter" position="-20.98 9.2 3.3" onClick="document.querySelector('#cameraRig').setAttribute('position','-20.98 7.6 3.3'); fuse(); showBoxesItem()"></a-entity>
 			<!-- Item to pick up -->
-			<a-entity id="itemBox" class="item-box" position="-21.26 9.2 2.24" onClick="pick()">
+			<a-entity id="boxesItem" class="item-box" position="-21.26 9.2 2.24" visible="false" onClick="pickBoxesItem()">
 				<a-entity id="boxes-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
@@ -349,10 +379,10 @@
 		<a-entity class="lab-box-teleporters">
 			<a-entity class="clickable" mixin="teleporter" position="9.87 7.5 20.16" onClick="document.querySelector('#cameraRig').setAttribute('position','9.87 5.9 20.16'); fuse()"></a-entity>
 			<a-entity class="clickable" mixin="teleporter" position="9.5 7.3 20.64" onClick="document.querySelector('#cameraRig').setAttribute('position','9.5 5.7 20.64'); fuse()"></a-entity>
-			<a-entity class="clickable" mixin="teleporter" position="10.32 7.5 21.44" onClick="document.querySelector('#cameraRig').setAttribute('position','10.32 5.9 21.44'); fuse(); showItem()"></a-entity>
-			<a-entity class="clickable" mixin="lastFuse teleporter" position="9.8 7.25 21.3" onClick="document.querySelector('#cameraRig').setAttribute('position','9.8 5.7 21.3'); fuse(); showItem()"></a-entity>
+			<a-entity class="clickable" mixin="teleporter" position="10.32 7.5 21.44" onClick="document.querySelector('#cameraRig').setAttribute('position','10.32 5.9 21.44'); fuse()"></a-entity>
+			<a-entity id="lastFuseLab" class="clickable" mixin="lastFuse teleporter" position="9.8 7.25 21.3" onClick="document.querySelector('#cameraRig').setAttribute('position','9.8 5.7 21.3'); fuse(); showLabItem()"></a-entity>
 			<!-- Item to pick up -->
-			<a-entity id="itemBox" class="item-box" position="9.72 7.25 21.03" onClick="pick()">
+			<a-entity id="labItem" class="item-box" position="9.72 7.25 21.03" visible="false" onClick="pickLabItem()">
 				<a-entity id="lab-item" class="item clickable" mixin="item shadow-cast shadow-receive shader-standard">
 					<a-entity class="light-item" mixin="itemlight shadow-cast"></a-entity>
 				</a-entity>
