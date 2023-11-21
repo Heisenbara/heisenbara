@@ -14,7 +14,7 @@
 		<script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
 	</head>
 	<body>
-		<a-scene light="defaultLightsEnabled: false; shadowMapType: basic" shadow="type: pcfsoft; autoUpdate: true">
+		<a-scene light="defaultLightsEnabled: false; shadowMapType: basic" shadow="type: pcfsoft; autoUpdate: true" background="color: darkred">
 
 			<a-assets>
 			<!-- front = minus-z -->
@@ -115,7 +115,6 @@
 			<!-- END walking-containers -->
 	
 			<a-entity light="type: hemisphere; color: seashell; intensity: 0.55"></a-entity>
-			<a-sky color="darkred"></a-sky>
 		</a-scene>
 	</body>
 </html>
