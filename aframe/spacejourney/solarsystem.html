@@ -9,34 +9,13 @@
 		
         <title>Solar System - Web VR with A-Frame</title>
         <meta name="description" content="Solar System - Web VR with A-Frame">
-        <script src="../js/aframe.min.js"></script>
-		<script src="../js/aframe-animation-component.min.js"></script>
-		<script src="../js/aframe-orbit-controls.min.js"></script>
+        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     </head>
 
     <body>
-        <a-scene light="defaultLightsEnabled: false" shadow="type: pcfsoft">
+        <a-scene light="defaultLightsEnabled: false" shadow="type: pcfsoft; autoUpdate: true" sound="src: #audioloop">
 			
-			<!-- Mixins -->
-			
-			<!-- Show Orbit Lines -->
-            <a-mixin id="orbit" geometry="primitive: torus; radius: 3; radiusTubular: 0.01; segmentsTubular: 100" material="color: #FFFFFF; opacity: 0.2; shader: standard" rotation="90 0 0" scale="2 2 0.1"></a-mixin>
-			<!-- Planet Rotation -->
-			<a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; dur: 20000; easing: linear"></a-mixin>
-			<!-- Orbit Rotation: Planet with Moons or Rings -->
-            <a-mixin id="orbit-rotation" animation="property: rotation; loop: true; to: 0 360 0; dur: 80000; easing: linear"></a-mixin>
-			<!-- Planets, Smooth Surface for Rendering -->
-			<a-mixin id="sphere" geometry="primitive: sphere; segments-width: 30; segments-height: 30; shader: standard" material="color: grey; roughness: 0.7" radius="1"></a-mixin>
-			<a-mixin id="rough" geometry="segments-width: 10; segments-height: 10; shader: standard"></a-mixin>
-			<!-- Planet Shadows if needed -->
-			<a-mixin id="shadows" material="shader: standard" shadow="cast: true; receive: true"></a-mixin>
-			<!-- Planet Rings, Smooth Surface for Rendering -->
-			<a-mixin id="ring-segments" geometry="primitive: torus; segments-radial: 30; segments-tubular: 30; shader: standard" material="color: white"></a-mixin>
-			<a-mixin id="ring-flat" geometry="segments-radial: 10; segments-tubular: 10; shader: standard"></a-mixin>
-			<!-- Shape Opacity -->
-			<a-mixin id="shape-opacity" material="opacity: 0.2; shader: standard"></a-mixin>
-			
-			<!-- Assets -->
+		<!-- Assets -->
             <a-assets>
                 <img id="milky-way" src="materials/2k_stars_milky_way.jpg" crossorigin="anonymous">
 				<img id="sun-texture" src="materials/2k_sun.jpg" material="color: yellow; opacity: 1" crossorigin="anonymous">
@@ -52,28 +31,45 @@
                 <img id="neptune-texture" src="materials/2k_neptune.jpg" crossorigin="anonymous">
                 <img id="pluto-texture" src="materials/pluto-map.jpg" crossorigin="anonymous">
 				
-				<!-- Audio -->
+			<!-- Audio -->
 				<audio id="audioloop" src="audio/Alien_Song.mp3" autoplay="true" preload="none" loop="true"></audio>
             </a-assets>
 			
-			<!-- Scene -->
-			<!-- The Camera -->
-			<a-entity id="rig" position="-15 3 -5">
-				<a-entity id="camera" camera look-controls orbit-controls="target: 100 1.6 20; initialPosition: -10 1 10"></a-entity>
+			<!-- Mixins -->
+		<!-- Show Orbit Lines -->
+            <a-mixin id="orbit" geometry="primitive: torus; radius: 3; radiusTubular: 0.01; segmentsTubular: 100" material="color: #FFFFFF; opacity: 0.2" rotation="90 0 0" scale="2 2 0.1"></a-mixin>
+		<!-- Planet Rotation -->
+			<a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; dur: 20000; easing: linear"></a-mixin>
+		<!-- Orbit Rotation: Planet with Moons or Rings -->
+            <a-mixin id="orbit-rotation" animation="property: rotation; loop: true; to: 0 360 0; dur: 80000; easing: linear"></a-mixin>
+		<!-- Planets, Smooth Surface for Rendering -->
+			<a-mixin id="sphere" geometry="primitive: sphere; segments-width: 30; segments-height: 30" material="color: grey; roughness: 0.7" radius="1"></a-mixin>
+			<a-mixin id="rough" geometry="segments-width: 10; segments-height: 10"></a-mixin>
+		<!-- Planet Shadows if needed -->
+			<a-mixin id="shadows" shadow="cast: true; receive: true"></a-mixin>
+		<!-- Planet Rings, Smooth Surface for Rendering -->
+			<a-mixin id="ring-segments" geometry="primitive: torus; segments-radial: 30; segments-tubular: 30" material="color: white"></a-mixin>
+			<a-mixin id="ring-flat" geometry="segments-radial: 10; segments-tubular: 10"></a-mixin>
+		<!-- Shape Opacity -->
+			<a-mixin id="shape-opacity" material="opacity: 0.2"></a-mixin>
+			
+		<!-- Scene -->
+		<!-- Camera -->
+			<a-entity id="rig" position="0 2 5" rotation="0 -180 0">
+				<a-entity id="camera" camera look-controls wasd-controls="enabled: false"></a-entity>
 			</a-entity>
 			
-			<!-- Basic Lighting -->
-            <a-entity id="basic-light" light="type: ambient; color: #BBB; castShadow: true"></a-entity>
-			
-			<!-- Starry Sky -->
+		<!-- Starry Sky -->
 			<a-sky material="src: #milky-way" geometry="radius: 5000"></a-sky>
-
-            <!-- The Sun with Point Light -->
-            <a-entity id="sun" mixin="sphere rotation" position="0 0 0" geometry="radius: 4" material="src: #sun-texture; color: white; roughness: 0; metalness: 1; emissive: #FFF; emissiveIntensity: 3; shader: flat">
+		
+		<!-- Solar System Container -->
+		<a-entity position="0 0 0">
+        <!-- The Sun with Point Light -->
+            <a-entity id="sun" mixin="sphere rotation" position="0 0 0" geometry="radius: 4" material="src: #sun-texture; color: white; metalness: 1; emissive: #FFF; emissiveIntensity: 3; shader: flat">
 				<a-entity light="type: point; intensity: 3; distance: 300; decay: 2; castShadow: true"></a-entity>
 			</a-entity>
 			
-			<!-- All Planets with Moons and Rings in Order from the Sun -->
+		<!-- All Planets with Moons and Rings in Order from the Sun -->
 			<a-entity id="orbit-mercury" mixin="orbit-rotation" animation="dur: 8800">
                 <a-entity id="mercury" mixin="sphere shadows orbit-rotation" position="0 0 6" geometry="radius: 0.4" material="src: #mercury-texture" animation="dur: 5800"></a-entity>
             </a-entity>
@@ -128,7 +124,8 @@
 			<a-entity id="orbit-pluto" mixin="orbit-rotation" animation="dur: 2473430">
                 <a-entity id="pluto" mixin="sphere shadows orbit-rotation" position="0 0 46" geometry="radius: 0.4" material="src: #pluto-texture" animation="dur: 69170"></a-entity>
             </a-entity>
-
+			</a-entity>
+			
         </a-scene>
     </body>
 
