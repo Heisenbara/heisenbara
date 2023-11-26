@@ -296,7 +296,11 @@
 
 			<!-- Globals -->
 			<a-entity light="type: hemisphere; color: seashell; groundColor: salmon; intensity: 0.2"></a-entity>
-			
+			<script>
+			// Set volume of audioloop down:
+			var vid = document.getElementById("audioloop");
+			vid.volume = 0.2;
+			</script>
 		</a-scene>
 	</body>
 </html>
