@@ -11,24 +11,22 @@
 
 		<meta name="description" content="Colliding Pyramids In A Particled Scene - VR, made with A-Frame">
 
-		<script src="../js/aframe.min.js"></script>
-		<script src="../js/aframe-event-set-component.min.js"></script>
-		<script src="../js/gradientsky.min.js"></script>
-		<script src="../js/aframe-particle-system-component.min.js"></script>
+		<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
 	</head>
 
 	<body>
-		<a-scene light="defaultLightsEnabled: false" shadow="type: pcfsoft; autoUpdate: true" light="shadowMapType: pcfsoft">
+		<a-scene light="defaultLightsEnabled: false; shadowMapType: pcfsoft" shadow="type: pcfsoft; autoUpdate: true" background="color: orange" sound="src: #audioloop">
 
 			<a-assets>
 				<a-mixin id="move-down" animation__move="property: position; from: 0 0.05 0; to: 0 -0.9 0; dir: alternate; easing: linear; loop: true; dur: 5000" animation__turnaround="property: rotation; from: 0 0 0; to: 0 360 0; dir: normal; easing: linear; loop: true; dur: 5000"></a-mixin>
 				<a-mixin id="move-up" animation__move="property: position; from: 0 -0.05 0; to: 0 0.9 0; dir: alternate; easing: linear; loop: true; dur: 5000" animation__turnaround="property: rotation; from: 0 0 180; to: 0 -360 180; dir: normal; easing: linear; loop: true; dur: 5000"></a-mixin>
 
-				<a-mixin id="triangle" geometry="primitive: triangle; shader: shader"></a-mixin>
-				<a-mixin id="plane" geometry="primitive: plane; width: 1; height: 1; shader: standard"></a-mixin>
+				<a-mixin id="triangle" geometry="primitive: triangle"></a-mixin>
+				<a-mixin id="plane" geometry="primitive: plane; width: 1; height: 1"></a-mixin>
 				<a-mixin id="rotate" rotation="45 45 45">
-				<a-mixin id="color-one" material="color: violet; side: double; shader: standard; roughness: 1; metalness: 0;">
-				<a-mixin id="color-two" material="color: darkmagenta; side: double; shader: standard; roughness: 1; metalness: 0">
+				<a-mixin id="color-one" material="color: violet; side: double; roughness: 1; metalness: 0;">
+				<a-mixin id="color-two" material="color: darkmagenta; side: double; roughness: 1; metalness: 0">
 				<a-mixin id="shadow" shadow="receive: true; cast: true"></a-mixin>
 
 				<a-mixin id="light-exit" light="type: point; intensity: 0.75; distance: 10; decay: 2"></a-mixin>
@@ -65,9 +63,17 @@
 
 			<a-entity light="type: hemisphere; intensity: 1; color: royalblue; groundColor: cornsilk" position="0 2 1.5"></a-entity>
 
-			<a-circle class="ground" radius="8" material="color: orange; side: double; transparent: true; opacity: 0.3; shader: standard" position="0 0 0" rotation="-90 0 0" shadow="receive: true" shadow="cast: true; receive: true;"></a-circle>
-
+			<a-circle class="ground" radius="8" material="color: orange; side: double; transparent: true; opacity: 0.3" position="0 0 0" rotation="-90 0 0" shadow="receive: true" shadow="cast: true; receive: true;"></a-circle>
+	<!-- Container with camera -->
+			<a-entity class="camera-container" position="0 0 0">
+				<a-camera look-controls wasd-controls="enabled: false"></a-camera>
+			</a-entity>
 		</a-scene>
+		
+		<script>
+			var vid = document.getElementById("audioloop");
+			vid.volume = 0.4;
+		</script>
 
 	</body>
 </html>
