@@ -10,11 +10,11 @@
 		<title>A-Gallery-With-Four-Rooms</title>
 		<meta name="description" content="A simple gallery with an exhibition of my selected photographic artwork. Designed with A-Frame.">
 
-		<script src="../js/aframe.min.js"></script>
+		<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
 	</head>
 	
 	<body>
-		<a-scene>
+		<a-scene light="defaultLightsEnabled: false; shadowMapType: basic" shadow="type: pcfsoft; autoUpdate: true" background="color: indigo">
 			
 			<a-assets>
 				<!-- North room: wall left -->
@@ -57,7 +57,7 @@
 				<img id="wood-pattern" src="materials/wood_pattern-256.png" crossorigin="anonymous">
 				
 				<!-- Audio -->
-				<audio id="audioloop" src="audio/Gymnopedie_No_3.mp3" autoplay="true" preload="auto" loop="true" crossorigin="anonymous"></audio>
+				<audio id="audioloop" src="audio/In Memory of Jean Talon - The Mini Vandals.mp3" autoplay="true" preload="auto" loop="true" crossorigin="anonymous"></audio>
 
 				<!-- Mixins -->
 				<a-mixin id="wall" geometry="primitive: plane; width: 3; height: 3"></a-mixin>
@@ -295,8 +295,6 @@
 			<!-- End Center of Gallery Group -->
 
 			<!-- Globals -->
-			<a-sky material="color: indigo" geometry="segmentsWidth: 64; segmentsHeight: 64"></a-sky>
-			
 			<a-entity light="type: hemisphere; color: seashell; groundColor: salmon; intensity: 0.2"></a-entity>
 			
 		</a-scene>
